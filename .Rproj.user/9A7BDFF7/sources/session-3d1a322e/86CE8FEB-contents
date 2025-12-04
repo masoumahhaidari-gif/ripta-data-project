@@ -6,11 +6,11 @@ library(tidyverse)
 library(broom)
 
 # Fit logistic regression:
-# IsLate (0/1) ~ RouteId + Hour + Weekday
+# Late (0/1) ~ RouteId + Hour + Weekday
 fit_late_model <- function(df) {
   
   df_model <- df %>%
-    filter(!is.na(IsLate),
+    filter(!is.na(Late),
            !is.na(RouteId),
            !is.na(Hour),
            !is.na(Weekday)) %>%
@@ -20,7 +20,7 @@ fit_late_model <- function(df) {
     )
   
   model <- glm(
-    IsLate ~ RouteId + Hour + Weekday,
+    Late ~ RouteId + Hour + Weekday,
     data   = df_model,
     family = binomial()
   )
@@ -28,14 +28,13 @@ fit_late_model <- function(df) {
   return(model)
 }
 
-# Get tidy summary of model coefficients
+# Tidy summary of coefficients
 summarise_late_model <- function(model) {
   broom::tidy(model)
 }
 
-# Add predicted probabilities of being late
+# Add predicted lateness probability
 add_predicted_prob <- function(df, model) {
-  
   df %>%
     mutate(
       PredLateProb = predict(model, newdata = df, type = "response")
