@@ -3,7 +3,7 @@
     "path": "~/Documents/GitHub/ripta-data-project/R/feature_engineering.R",
     "project_path": "R/feature_engineering.R",
     "type": "r_source",
-    "hash": "1503342401",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1764887906513.0,
@@ -12,7 +12,7 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "31,0",
+        "cursorPosition": "12,33",
         "scrollLine": "5"
     },
     "folds": "",
