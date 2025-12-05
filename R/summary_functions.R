@@ -1,54 +1,44 @@
 # summary_functions.R
+# -------------------
 # EDA summaries for RIPTA lateness
-# ---------------------------------
 
-library(tidyverse)
+library(dplyr)
 
-# Overall lateness: one-row summary
+# Overall late rate
 late_rate_overall <- function(df) {
   df %>%
-    summarise(
-      n_total  = n(),
-      n_late   = sum(Late, na.rm = TRUE),
-      pct_late = n_late / n_total
-    )
+    summarise(overall_late_rate = mean(Late, na.rm = TRUE))
 }
 
-# Lateness rate by RouteId
+# Late rate by route
 late_rate_by_route <- function(df) {
   df %>%
-    group_by(RouteId) %>%
+    group_by(Route) %>%
     summarise(
-      n_total  = n(),
-      n_late   = sum(Late, na.rm = TRUE),
-      pct_late = n_late / n_total,
-      .groups  = "drop"
+      n        = n(),
+      late_rate = mean(Late, na.rm = TRUE)
     ) %>%
-    arrange(desc(pct_late))
+    arrange(desc(late_rate))
 }
 
-# Lateness rate by hour of day
+# Late rate by hour of day
 late_rate_by_hour <- function(df) {
   df %>%
     group_by(Hour) %>%
     summarise(
-      n_total  = n(),
-      n_late   = sum(Late, na.rm = TRUE),
-      pct_late = n_late / n_total,
-      .groups  = "drop"
+      n        = n(),
+      late_rate = mean(Late, na.rm = TRUE)
     ) %>%
     arrange(Hour)
 }
 
-# Lateness rate by weekday
+# Late rate by weekday
 late_rate_by_weekday <- function(df) {
   df %>%
     group_by(Weekday) %>%
     summarise(
-      n_total  = n(),
-      n_late   = sum(Late, na.rm = TRUE),
-      pct_late = n_late / n_total,
-      .groups  = "drop"
+      n        = n(),
+      late_rate = mean(Late, na.rm = TRUE)
     ) %>%
     arrange(Weekday)
 }

@@ -3,7 +3,7 @@
     "path": "~/Documents/GitHub/ripta-data-project/R/plotting_functions.R",
     "project_path": "R/plotting_functions.R",
     "type": "r_source",
-    "hash": "2799434555",
+    "hash": "1204184795",
     "contents": "",
     "dirty": false,
     "created": 1764887950889.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "0,0",
-        "scrollLine": "0"
+        "cursorPosition": "83,0",
+        "scrollLine": "47"
     },
     "folds": "",
-    "lastKnownWriteTime": 1764893577,
+    "lastKnownWriteTime": 1764900003,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1764893577,
+    "last_content_update": 1764900003716,
     "read_only": false,
     "read_only_alternatives": []
 }

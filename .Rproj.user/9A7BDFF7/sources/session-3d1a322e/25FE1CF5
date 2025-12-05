@@ -3,7 +3,7 @@
     "path": "~/Documents/GitHub/ripta-data-project/R/simulation_functions.R",
     "project_path": "R/simulation_functions.R",
     "type": "r_source",
-    "hash": "0",
+    "hash": "2594925825",
     "contents": "",
     "dirty": false,
     "created": 1764887965669.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "6,0",
+        "cursorPosition": "26,0",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1764893786,
+    "lastKnownWriteTime": 1764900799,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1764893786,
+    "last_content_update": 1764900799849,
     "read_only": false,
     "read_only_alternatives": []
 }
