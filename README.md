@@ -34,14 +34,8 @@ Run the entire analysis with:
 source("main.R")
 
 
-This will:
-
-Load and clean the OTP dataset
-Create feature variables (hour, weekday, lateness)
-Fit the logistic regression model
-Produce and save plots
-Run the 3-minute buffer simulation and print updated lateness rates
-All figures are saved automatically to the /figures folder.
+This will Load and clean the OTP dataset. Create feature variables (hour, weekday, lateness). Fit the logistic regression model. Produce and save plots
+Run the 3-minute buffer simulation and print updated lateness rates. All figures are saved automatically to the /figures folder.
 
 Outputs:
 
