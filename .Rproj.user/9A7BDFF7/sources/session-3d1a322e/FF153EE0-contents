@@ -15,14 +15,16 @@ load_otp_data <- function(path) {
 clean_otp_data <- function(df) {
   df %>%
     mutate(
-      # convert times to proper datetime
-      IncidentDateTime = ymd_hms(IncidentDateTime),
-      ScheduleTime     = ymd_hms(ScheduleTime)
+      # rename and parse times from the real column names
+      IncidentDateTime = ymd_hms(`Actual.Arrival.Time`),
+      ScheduleTime     = ymd_hms(`Scheduled.Time`),
+      
+      # convert delay from seconds to minutes so it matches our plan
+      Deviation = Delay.Sec / 60
     ) %>%
-    # drop rows with missing key info
     filter(
       !is.na(IncidentDateTime),
-      !is.na(ScheduleTime),
-      !is.na(IncidentName)
+      !is.na(ScheduleTime)
     )
 }
+
