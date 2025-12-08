@@ -7,14 +7,20 @@ library(ggplot2)
 
 # 1) Distribution of delays (in minutes)
 plot_delay_distribution <- function(df) {
-  ggplot(df, aes(x = Delay.Sec / 60)) +
+  
+  # Remove unrealistic outliers (keep delays between -30 and +60 minutes)
+  df_filtered <- df %>%
+    dplyr::filter(between(Delay.Sec / 60, -30, 60))
+  
+  ggplot(df_filtered, aes(x = Delay.Sec / 60)) +
     geom_histogram(bins = 50) +
     labs(
       x = "Delay (minutes)",
       y = "Number of stops",
-      title = "Distribution of RIPTA bus delays"
+      title = "Distribution of RIPTA bus delays (cleaned)"
     )
 }
+
 
 # 2) Lateness rate by route (for routes with enough data)
 #    -> tweaked so labels are less cramped and easier to read
