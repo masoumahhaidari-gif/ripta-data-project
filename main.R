@@ -39,11 +39,11 @@ by_hour          # lateness by hour
 by_weekday       # lateness by weekday
 
 
-# 6. Plots --------------------------------------------------------------
+# 6. Plots -------------------------------------------------------------
 
-p_delay   <- plot_delay_distribution(otp_feat)
-p_route   <- plot_late_by_route(otp_feat)
-p_hour    <- plot_late_by_hour(otp_feat)
+p_delay  <- plot_delay_distribution(otp_feat)
+p_route  <- plot_late_by_route(otp_feat)
+p_hour   <- plot_late_by_hour(otp_feat)
 p_heatmap <- plot_weekday_heatmap(otp_feat)
 
 # Show the plots
@@ -52,13 +52,12 @@ p_route
 p_hour
 p_heatmap
 
-ggsave("figures/delay_distribution.png", p_delay,   width = 7, height = 5)
-ggsave("figures/lateness_by_route.png",  p_route,   width = 7, height = 5)
-ggsave("figures/lateness_by_hour.png",   p_hour,    width = 7, height = 5)
+# Save plots
+ggsave("figures/delay_distribution.png", p_delay,  width = 7, height = 5)
+ggsave("figures/lateness_by_route.png",  p_route,  width = 7, height = 5)
+ggsave("figures/lateness_by_hour.png",   p_hour,   width = 7, height = 5)
 ggsave("figures/lateness_heatmap.png",   p_heatmap, width = 7, height = 5)
 
-p_route <- plot_late_by_route(otp_feat)
-p_route
 
 # 7. Simulation -------------------------------------------------------------
 

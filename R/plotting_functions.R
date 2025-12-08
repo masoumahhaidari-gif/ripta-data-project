@@ -7,13 +7,9 @@ library(ggplot2)
 
 # 1) Distribution of delays (in minutes)
 plot_delay_distribution <- function(df) {
-  
-  # Remove unrealistic outliers (keep delays between -30 and +60 minutes)
-  df_filtered <- df %>%
-    dplyr::filter(between(Delay.Sec / 60, -30, 60))
-  
-  ggplot(df_filtered, aes(x = Delay.Sec / 60)) +
+  ggplot(df, aes(x = Delay.Sec / 60)) +
     geom_histogram(bins = 50) +
+    xlim(-30, 60) +   # keep typical delays; drop extreme outliers
     labs(
       x = "Delay (minutes)",
       y = "Number of stops",
