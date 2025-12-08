@@ -1,42 +1,27 @@
 # model_functions.R
-# Fits a logistic regression model for bus lateness
-# -------------------------------------------------
+# ------------------
+# Logistic regression model for bus lateness
 
-library(tidyverse)
-library(broom)
+library(dplyr)
 
-# Fit logistic regression:
-# Late (0/1) ~ RouteId + Hour + Weekday
+# 1) Fit logistic regression model
 fit_late_model <- function(df) {
-  
-  df_model <- df %>%
-    filter(!is.na(Late),
-           !is.na(RouteId),
-           !is.na(Hour),
-           !is.na(Weekday)) %>%
-    mutate(
-      RouteId = as.factor(RouteId),
-      Weekday = as.factor(Weekday)
-    )
-  
-  model <- glm(
-    Late ~ RouteId + Hour + Weekday,
-    data   = df_model,
+  glm(
+    Late ~ Route + Hour + Weekday + TimeOfDay,
+    data   = df,
     family = binomial()
   )
-  
-  return(model)
 }
 
-# Tidy summary of coefficients
-summarise_late_model <- function(model) {
-  broom::tidy(model)
-}
-
-# Add predicted lateness probability
+# 2) Add predicted probabilities of being late
 add_predicted_prob <- function(df, model) {
   df %>%
     mutate(
-      PredLateProb = predict(model, newdata = df, type = "response")
+      p_late = predict(model, type = "response")
     )
+}
+
+# 3) Summarise model in a tidy way (optional but handy)
+summarise_late_model <- function(model) {
+  broom::tidy(model)
 }

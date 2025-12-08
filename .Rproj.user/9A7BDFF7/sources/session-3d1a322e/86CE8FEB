@@ -3,7 +3,7 @@
     "path": "~/Documents/GitHub/ripta-data-project/R/model_functions.R",
     "project_path": "R/model_functions.R",
     "type": "r_source",
-    "hash": "4262929508",
+    "hash": "2969164876",
     "contents": "",
     "dirty": false,
     "created": 1764887935624.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "42,0",
-        "scrollLine": "0"
+        "cursorPosition": "27,0",
+        "scrollLine": "9"
     },
     "folds": "",
-    "lastKnownWriteTime": 1764889483,
+    "lastKnownWriteTime": 1764897729,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1764889483591,
+    "last_content_update": 1764897729085,
     "read_only": false,
     "read_only_alternatives": []
 }
