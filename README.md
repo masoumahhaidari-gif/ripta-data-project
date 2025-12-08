@@ -18,8 +18,10 @@ R/                         - Folder with all project functions
   simulation_functions.R
   summary_functions.R
 
-data/                      - Place your OTP dataset here (not included)
+data/                      - Contains the OTP dataset used in this project (otp_simulated.csv)
+
 figures/                   - Output plots
+
 README.md                  - Project documentation
 
 
