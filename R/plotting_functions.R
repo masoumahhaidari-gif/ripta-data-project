@@ -1,66 +1,85 @@
 # plotting_functions.R
-# Visualization functions for RIPTA lateness
-# ------------------------------------------
+# --------------------
+# Plots for RIPTA lateness patterns
 
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
 
-# 1) Bar plot: lateness rate by route
-plot_late_by_route <- function(df) {
-  rates <- late_rate_by_route(df)
-  
-  ggplot(rates, aes(x = reorder(RouteId, pct_late), y = pct_late)) +
-    geom_col() +
-    coord_flip() +
+# 1) Distribution of delays (in minutes)
+plot_delay_distribution <- function(df) {
+  ggplot(df, aes(x = Delay.Sec / 60)) +
+    geom_histogram(bins = 50, fill = "gray30") +
+    xlim(-30, 60) +  # keep typical delays; remove extreme outliers
+    scale_y_continuous(labels = scales::comma) +  # remove scientific notation
     labs(
-      title = "Lateness Rate by Route",
-      x = "Route",
-      y = "Percent Late"
-    ) +
-    scale_y_continuous(labels = scales::percent_format(accuracy = 1))
+      x = "Delay (minutes)",
+      y = "Number of stops",
+      title = "Distribution of RIPTA bus delays (cleaned)"
+    )
 }
 
-# 2) Line plot: lateness rate by hour of day
-plot_late_by_hour <- function(df) {
-  rates <- late_rate_by_hour(df)
+# 2) Lateness rate by route (for routes with enough data)
+#    -> tweaked so labels are less cramped and easier to read
+plot_late_by_route <- function(df, min_n = 500) {
+  route_stats <- df %>%
+    group_by(Route) %>%
+    summarise(
+      n        = n(),
+      late_rate = mean(Late, na.rm = TRUE),
+      .groups = "drop"
+    ) %>%
+    filter(n >= min_n) %>%
+    arrange(late_rate)   # order routes from lowest to highest late rate
   
-  ggplot(rates, aes(x = Hour, y = pct_late, group = 1)) +
+  ggplot(route_stats,
+         aes(x = late_rate,
+             y = reorder(Route, late_rate))) +
+    geom_col(fill = "grey40") +
+    labs(
+      x = "Proportion late",
+      y = "Route",
+      title = paste0(
+        "Lateness rate by route (routes with at least ",
+        min_n, " stops)"
+      )
+    ) +
+    scale_y_discrete(expand = expansion(mult = c(0.02, 0.02))) + # a bit of vertical spacing
+    theme_minimal(base_size = 14) +
+    theme(
+      axis.text.y  = element_text(size = 7),      # smaller route labels
+      plot.title   = element_text(size = 16, face = "bold"),
+      axis.title   = element_text(size = 13)
+    )
+}
+
+# 3) Lateness rate by hour of day
+plot_late_by_hour <- function(df) {
+  df %>%
+    group_by(Hour) %>%
+    summarise(late_rate = mean(Late, na.rm = TRUE)) %>%
+    ggplot(aes(x = Hour, y = late_rate)) +
     geom_line() +
     geom_point() +
+    scale_x_continuous(breaks = 0:23) +
     labs(
-      title = "Lateness Rate by Hour of Day",
-      x = "Hour of Day",
-      y = "Percent Late"
-    ) +
-    scale_y_continuous(labels = scales::percent_format(accuracy = 1))
-}
-
-# 3) Heatmap: lateness by weekday and hour
-plot_weekday_heatmap <- function(df) {
-  summary <- df %>%
-    group_by(Weekday, Hour) %>%
-    summarise(
-      pct_late = mean(Late, na.rm = TRUE),
-      .groups = "drop"
+      x = "Hour of day",
+      y = "Proportion late",
+      title = "Lateness rate by hour of day"
     )
-  
-  ggplot(summary, aes(x = Hour, y = Weekday, fill = pct_late)) +
-    geom_tile() +
-    labs(
-      title = "Heatmap of Lateness by Weekday and Hour",
-      x = "Hour of Day",
-      y = "Weekday",
-      fill = "Percent Late"
-    ) +
-    scale_fill_continuous(labels = scales::percent_format(accuracy = 1))
 }
 
-# 4) Histogram: distribution of delay (Deviation)
-plot_delay_distribution <- function(df) {
-  ggplot(df, aes(x = Deviation)) +
-    geom_histogram(binwidth = 1, boundary = 0, closed = "left") +
+# 4) Heatmap: lateness by weekday & hour
+plot_weekday_heatmap <- function(df) {
+  df %>%
+    group_by(Weekday, Hour) %>%
+    summarise(late_rate = mean(Late, na.rm = TRUE), .groups = "drop") %>%
+    ggplot(aes(x = Hour, y = Weekday, fill = late_rate)) +
+    geom_tile() +
+    scale_x_continuous(breaks = 0:23) +
     labs(
-      title = "Distribution of Delay (Deviation)",
-      x = "Delay in Minutes (early - / late +)",
-      y = "Number of Stops"
+      x = "Hour of day",
+      y = "Weekday",
+      fill = "Late rate",
+      title = "Lateness rate by hour and weekday"
     )
 }
