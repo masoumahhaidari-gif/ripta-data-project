@@ -83,3 +83,27 @@ plot_weekday_heatmap <- function(df) {
       title = "Lateness rate by hour and weekday"
     )
 }
+
+# 5) Bar chart: Effect of 3-Minute Schedule Buffer on Lateness Rate
+plot_buffer_effect <- function(original_rate, new_rate) {
+  df <- data.frame(
+    Scenario = c("Original", "With 3-Min Buffer"),
+    LatenessRate = c(original_rate, new_rate)
+  )
+  
+  ggplot(df, aes(x = Scenario, y = LatenessRate, fill = Scenario)) +
+    geom_col(width = 0.6) +
+    scale_y_continuous(labels = scales::percent_format()) +
+    labs(
+      title = "Effect of 3-Minute Schedule Buffer on Lateness Rate",
+      x = "", y = "Lateness Rate"
+    ) +
+    theme_minimal(base_size = 12) +
+    theme(
+      plot.title = element_text(size = 14, face = "bold"),
+      axis.text = element_text(size = 10),
+      legend.position = "none"
+    )
+}
+
+

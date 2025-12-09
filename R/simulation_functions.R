@@ -11,7 +11,7 @@ simulate_buffer <- function(df, buffer = 3) {
   df %>%
     mutate(
       # add buffer to scheduled time
-      Scheduled.Time_buffered = Scheduled.Time + minutes(buffer),
+      Scheduled.Time_buffered = ScheduleTime + minutes(buffer),
       
       # recompute delay based on buffered schedule (in seconds)
       Delay_buffered_sec = as.numeric(
